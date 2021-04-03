@@ -3,13 +3,15 @@
     package="hu.mobillab.antibore">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".AntiBoreApplication"
         android:theme="@style/Theme.AntiBore">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.occupation.OccupationActivity"></activity>
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
