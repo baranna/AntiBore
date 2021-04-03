@@ -1,0 +1,31 @@
+language: android
+dist: trusty
+android:
+  components:
+    - tools
+    - platform-tools
+
+    # The BuildTools version
+    - build-tools-31.0.0
+
+    # The SDK version
+    - android-30
+
+    # Additional components
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+
+    # System image run emulator(s) during tests
+    - sys-img-x86-android-30
+before_install:
+  - yes | sdkmanager "platforms;android-30"
+  - chmod +x gradlew
+notifications:
+  email:
+    recipients:
+      - baross.anna@gmail.com
+    on_success: always
+    on_failure: always
+script:
+  - ./gradlew build
