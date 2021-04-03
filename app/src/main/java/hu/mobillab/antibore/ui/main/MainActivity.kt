@@ -13,6 +13,16 @@ class MainActivity : AppCompatActivity(), MainScreen {
         setContentView(R.layout.activity_main)
     }
 
+    override fun onStart() {
+        super.onStart()
+        MainPresenter.attachScreen(this)
+    }
+
+    override fun onStop() {
+        MainPresenter.detachScreen()
+        super.onStop()
+    }
+
     override fun showOccupations(occupationsList: List<Occupation>) {
         TODO("Not yet implemented")
     }
