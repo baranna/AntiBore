@@ -2,9 +2,11 @@ package hu.mobillab.antibore.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import dagger.hilt.android.AndroidEntryPoint
 import hu.mobillab.antibore.R
 import hu.mobillab.antibore.model.Occupation
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), MainScreen {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
