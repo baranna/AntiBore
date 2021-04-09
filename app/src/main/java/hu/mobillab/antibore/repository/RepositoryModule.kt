@@ -1,4 +1,4 @@
-package hu.mobillab.antibore
+package hu.mobillab.antibore.repository
 
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -6,4 +6,4 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object OccupationModule
+object RepositoryModule
