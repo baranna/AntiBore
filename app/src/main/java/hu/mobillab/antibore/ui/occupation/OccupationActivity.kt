@@ -5,10 +5,14 @@ import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import hu.mobillab.antibore.R
 import hu.mobillab.antibore.model.Occupation
-import hu.mobillab.antibore.ui.main.MainPresenter
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class OccupationActivity : AppCompatActivity(), OccupationScreen {
+
+    @Inject
+    lateinit var occupationPresenter: OccupationPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_occupation)
@@ -16,11 +20,11 @@ class OccupationActivity : AppCompatActivity(), OccupationScreen {
 
     override fun onStart() {
         super.onStart()
-        OccupationPresenter.attachScreen(this)
+        occupationPresenter.attachScreen(this)
     }
 
     override fun onStop() {
-        OccupationPresenter.detachScreen()
+        occupationPresenter.detachScreen()
         super.onStop()
     }
 
