@@ -7,7 +7,8 @@ import javax.inject.Inject
 class MainPresenter @Inject constructor(var occupationInteractor: OccupationInteractor) : Presenter<MainScreen?> () {
 
     fun getOccupations()  {
-        val occupations = occupationInteractor.getOccupations()
-        screen?.showOccupations(occupations)
+        val occupations = occupationInteractor.getOccupations() {
+            screen?.showOccupations(it)
+        }
     }
 }
