@@ -15,38 +15,19 @@ import javax.inject.Inject
 
 class OccupationInteractor @Inject constructor(var occupationApi: OccupationApi, var occupationRepository: OccupationRepository) {
 
-    fun getOccupations(callback: (List<Occupation?>) -> Unit) {
+    fun getOccupations() {
         // TODO: get stored occupations and get new ones
         CoroutineScope(Dispatchers.IO).launch {
             occupationRepository.getAllOccupations()
-        }
-
-        getOccupation() {
-            callback(listOf(it))
+            occupationApi.getActivity()
         }
     }
 
-    fun getOccupation(key: String = "", callback: (Occupation?) -> Unit) {
-        occupationApi.getActivity(key).enqueue(
-            object : Callback<OccupationDto> {
-                override fun onResponse(
-                    call: Call<OccupationDto>,
-                    response: Response<OccupationDto>
-                ) {
-                    val body = response.body()
-                    callback(
-                        if (body !== null)
-                            mapOccupation(body)
-                        else null
-                    )
-                }
-
-                override fun onFailure(call: Call<OccupationDto>, t: Throwable) {
-                    callback(null)
-                }
-
-            }
-        )
+    fun getOccupation(key: String = "") {
+        CoroutineScope(Dispatchers.IO).launch {
+            occupationRepository.getAllOccupations()
+            occupationApi.getActivity(key)
+        }
     }
 
     fun mapOccupation(dto: OccupationDto) = Occupation(
