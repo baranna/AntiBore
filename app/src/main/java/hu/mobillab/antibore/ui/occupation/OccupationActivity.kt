@@ -28,7 +28,7 @@ class OccupationActivity : AppCompatActivity(), OccupationScreen {
         super.onStop()
     }
 
-    override fun showOccupationDetails(occupation: Occupation) {
+    override fun showOccupationDetails(occupation: Occupation?) {
         TODO("Not yet implemented")
     }
 }
