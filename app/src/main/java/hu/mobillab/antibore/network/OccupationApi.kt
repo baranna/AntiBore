@@ -16,7 +16,7 @@ interface OccupationApi {
      * @return Call&lt;Occupation&gt;
      */
     @GET("activity")
-    fun getActivity(
+    suspend fun getActivity(
             @retrofit2.http.Query("key") key: String? = "", @retrofit2.http.Query("type") type: String? = "", @retrofit2.http.Query("participants") participants: Int? = null, @retrofit2.http.Query("price") price: BigDecimal? = null, @retrofit2.http.Query("maxprice") maxprice: String? = ""
-    ): retrofit2.Call<OccupationDto>
+    ): OccupationDto
 }

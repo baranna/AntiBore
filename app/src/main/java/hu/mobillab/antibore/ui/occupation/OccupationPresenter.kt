@@ -6,9 +6,7 @@ import javax.inject.Inject
 
  class OccupationPresenter @Inject constructor(var occupationInteractor: OccupationInteractor) : Presenter<OccupationScreen?>() {
 
-    fun getOccupation(key: String) {
-        occupationInteractor.getOccupation(key) {
-            screen?.showOccupationDetails(it)
-        }
-    }
-}
+     fun getOccupation(key: String) {
+         return occupationInteractor.getOccupation(key)
+     }
+ }
