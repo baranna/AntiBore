@@ -8,13 +8,19 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import hu.mobillab.antibore.repository.OccupationRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class OccupationInteractor @Inject constructor(var occupationApi: OccupationApi, var occupationRepository: OccupationRepository) {
 
-    suspend fun getOccupations(callback: (List<Occupation?>) -> Unit) {
+    fun getOccupations(callback: (List<Occupation?>) -> Unit) {
         // TODO: get stored occupations and get new ones
-        occupationRepository.getAllOccupations()
+        CoroutineScope(Dispatchers.IO).launch {
+            occupationRepository.getAllOccupations()
+        }
+
         getOccupation() {
             callback(listOf(it))
         }

@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class MainPresenter @Inject constructor(var occupationInteractor: OccupationInteractor) : Presenter<MainScreen?> () {
 
-    suspend fun getOccupations()  {
+    fun getOccupations()  {
         val occupations = occupationInteractor.getOccupations() {
             screen?.showOccupations(it)
         }
