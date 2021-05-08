@@ -21,7 +21,7 @@ android:
     # System image run emulator(s) during tests
     - sys-img-x86-android-30
 before_install:
-  - yes | sdkmanager --licenses
+  - yes | sdkmanager "platforms;android-30"
   - chmod +x gradlew
 notifications:
   email:
