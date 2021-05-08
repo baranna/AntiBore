@@ -8,10 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.Composable
@@ -43,11 +40,14 @@ class MainActivity : AppCompatActivity(), MainScreen {
 
     private val isRefreshing = mutableStateOf(true)
 
+    private val showOnlySaved = mutableStateOf(false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainPresenter.getOccupations()
+        mainPresenter.getNewOccupations()
         setContent {
             ThemeProvider {
+                Header()
                 if (occupations.size == 0) {
                     Loading()
                 } else {
@@ -67,10 +67,59 @@ class MainActivity : AppCompatActivity(), MainScreen {
         super.onStop()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (showOnlySaved.value)
+            mainPresenter.getSavedOccupations()
+    }
+
     override fun showOccupations(occupationsList: List<Occupation?>) {
         occupations.clear()
         occupations.addAll(occupationsList.filterNotNull())
         isRefreshing.value = false
+    }
+
+    @Composable
+    fun Header() {
+        Row {
+            Card(
+                elevation = 3.dp,
+                shape = RoundedCornerShape(3.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp, start = 4.dp, end = 4.dp, bottom = 5.dp)
+            ) {
+                Column {
+                    Text(
+                        text = stringResource(
+                            if (!showOnlySaved.value)
+                                R.string.randomOccupations
+                            else R.string.savedOccupations
+                        ),
+                        style = MaterialTheme.typography.h5,
+                        modifier = Modifier.padding(top = 20.dp, bottom = 20.dp, start = 8.dp)
+                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 10.dp, end = 8.dp)
+                    ) {
+                        Switch(
+                            checked = showOnlySaved.value,
+                            onCheckedChange = {
+                                showOnlySaved.value = it; mainPresenter.onShowOnlySavedChanged(it)
+                            }
+                        )
+                        Text(
+                            text = stringResource(R.string.showOnlySaved),
+                            style = MaterialTheme.typography.body1
+                        )
+                    }
+                }
+            }
+        }
     }
 
     @Composable
@@ -79,7 +128,11 @@ class MainActivity : AppCompatActivity(), MainScreen {
     ) {
         SwipeRefresh(
             state = rememberSwipeRefreshState(isRefreshing.value),
-            onRefresh = { isRefreshing.value = true; mainPresenter.getOccupations() }
+            onRefresh = {
+                isRefreshing.value = true;
+                showOnlySaved.value = false;
+                mainPresenter.getNewOccupations()
+            }
         ) {
             LazyColumn() {
                 items(occupations) {

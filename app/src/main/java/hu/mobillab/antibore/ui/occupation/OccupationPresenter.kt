@@ -9,6 +9,7 @@ import hu.mobillab.antibore.ui.Presenter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class OccupationPresenter @Inject constructor(var occupationInteractor: OccupationInteractor) :
@@ -16,8 +17,11 @@ class OccupationPresenter @Inject constructor(var occupationInteractor: Occupati
 
     fun getOccupation(key: String? = "") {
         CoroutineScope(Dispatchers.IO).launch {
-            val occupation = occupationInteractor.getOccupation(key ?: "")
-            screen?.showOccupationDetails(occupation)
+            val (occupation, saved) = occupationInteractor.getOccupation(key ?: "")
+            withContext(Dispatchers.Main) {
+                screen?.showOccupationDetails(occupation)
+                screen?.setOccupationSaved(saved)
+            }
         }
     }
 
@@ -29,7 +33,18 @@ class OccupationPresenter @Inject constructor(var occupationInteractor: Occupati
     fun saveOccupation(occupation: Occupation) {
         CoroutineScope(Dispatchers.IO).launch {
             occupationInteractor.saveOccupation(occupation)
-            screen?.occupationSaved()
+            withContext(Dispatchers.Main) {
+                screen?.occupationSaved()
+            }
+        }
+    }
+
+    fun deleteOccupation(occupation: Occupation) {
+        CoroutineScope(Dispatchers.IO).launch {
+            occupationInteractor.deleteOccupation(occupation)
+            withContext(Dispatchers.Main) {
+                screen?.occupationDeleted()
+            }
         }
     }
 }

@@ -20,16 +20,20 @@ class OccupationInteractor @Inject constructor(
         return list;
     }
 
-    suspend fun getOccupation(key: String = ""): Occupation {
+    suspend fun getOccupation(key: String = ""): Pair<Occupation, Boolean> {
         val storedOccupation = occupationRepository.getOccupation(key)
         if (storedOccupation != null) {
-            return storedOccupation;
+            return (storedOccupation to true);
         }
-        return mapOccupation(occupationApi.getActivity(key))
+        return (mapOccupation(occupationApi.getActivity(key)) to false)
     }
 
     suspend fun saveOccupation(occupation: Occupation) {
         occupationRepository.addOccupation(occupation)
+    }
+
+    suspend fun deleteOccupation(occupation: Occupation) {
+        occupationRepository.deleteOccupation(occupation)
     }
 
     suspend fun getSavedOccupations(): List<Occupation> {

@@ -8,15 +8,18 @@ import hu.mobillab.antibore.ui.occupation.OccupationActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(var occupationInteractor: OccupationInteractor) :
     Presenter<MainScreen?>() {
 
-    fun getOccupations() {
+    fun getNewOccupations() {
         CoroutineScope(Dispatchers.IO).launch {
             val occupations = occupationInteractor.getOccupations()
-            screen?.showOccupations(occupations)
+            withContext(Dispatchers.Main) {
+                screen?.showOccupations(occupations)
+            }
         }
     }
 
@@ -24,5 +27,22 @@ class MainPresenter @Inject constructor(var occupationInteractor: OccupationInte
         val intent = Intent(screen as Context, OccupationActivity::class.java);
         intent.putExtra("id", id)
         (screen as Context).startActivity(intent)
+    }
+
+    fun onShowOnlySavedChanged(showOnlySaved: Boolean) {
+        screen?.showOccupations(listOf())
+        if (showOnlySaved)
+            getSavedOccupations()
+        else
+            getNewOccupations()
+    }
+
+    fun getSavedOccupations() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val occupations = occupationInteractor.getSavedOccupations()
+            withContext(Dispatchers.Main) {
+                screen?.showOccupations(occupations)
+            }
+        }
     }
 }

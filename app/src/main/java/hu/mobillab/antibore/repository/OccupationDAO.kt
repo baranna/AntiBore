@@ -1,6 +1,7 @@
 package hu.mobillab.antibore.repository
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import hu.mobillab.antibore.model.Occupation
@@ -15,4 +16,7 @@ interface OccupationDAO {
 
     @Insert
     suspend fun insertOccupation(occupation: Occupation)
+
+    @Delete
+    suspend fun deleteOccupation(occupation: Occupation)
 }

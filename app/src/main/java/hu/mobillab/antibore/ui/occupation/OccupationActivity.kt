@@ -36,6 +36,8 @@ class OccupationActivity : AppCompatActivity(), OccupationScreen {
 
     private val occupation = mutableStateOf<Occupation?>(null)
 
+    private val isOccupationSaved = mutableStateOf<Boolean>(false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         occupationPresenter.getOccupation(intent.extras?.getString("id"))
@@ -68,6 +70,18 @@ class OccupationActivity : AppCompatActivity(), OccupationScreen {
         runOnUiThread {
             Toast.makeText(this, R.string.occupationSaved, Toast.LENGTH_SHORT).show()
         }
+        isOccupationSaved.value = true
+    }
+
+    override fun occupationDeleted() {
+        runOnUiThread {
+            Toast.makeText(this, R.string.occupationDeleted, Toast.LENGTH_SHORT).show()
+        }
+        isOccupationSaved.value = false
+    }
+
+    override fun setOccupationSaved(saved: Boolean) {
+        isOccupationSaved.value = saved
     }
 
     @Composable
@@ -159,11 +173,19 @@ class OccupationActivity : AppCompatActivity(), OccupationScreen {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 TextButton(
-                    onClick = { occupationPresenter.saveOccupation(occupation) },
-                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colors.secondary)
+                    onClick = {
+                        if (!isOccupationSaved.value)
+                            occupationPresenter.saveOccupation(occupation) else occupationPresenter.deleteOccupation(
+                            occupation
+                        )
+                    },
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colors.secondary),
                 ) {
                     Text(
-                        text = stringResource(R.string.saveForLater),
+                        text = stringResource(
+                            if (!isOccupationSaved.value)
+                                R.string.saveForLater else R.string.deleteFromSaved
+                        ),
                         modifier = Modifier.padding(5.dp),
                     )
                 }

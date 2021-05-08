@@ -11,4 +11,9 @@
     <string name="goToPage">Go to web page</string>
     <string name="saveForLater">Save for later</string>
     <string name="occupationSaved">Occupation successfully saved!</string>
+    <string name="randomOccupations">Random ideas to spend time on</string>
+    <string name="savedOccupations">Your spared occupations</string>
+    <string name="occupationDeleted">Occupation removed from saved list</string>
+    <string name="deleteFromSaved">Remove from saved list</string>
+    <string name="showOnlySaved">Show only saved</string>
 </resources>
