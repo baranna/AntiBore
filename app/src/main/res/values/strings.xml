@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">AntiBore</string>
+    <string name="categoryIcon">Category</string>
+    <string name="imageForCategory">Image for category</string>
+    <string name="participantsIcon">Participants</string>
+    <string name="participants">Participants</string>
+    <string name="accessibilityIcon">Accessibility</string>
+    <string name="accessibility">Accessibility</string>
+    <string name="priceIcon">Price</string>
+    <string name="price">Price</string>
+    <string name="goToPage">Go to web page</string>
 </resources>
