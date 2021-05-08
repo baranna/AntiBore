@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import hu.mobillab.antibore.interactors.OccupationInteractor
+import hu.mobillab.antibore.model.Occupation
 import hu.mobillab.antibore.ui.Presenter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +16,7 @@ class OccupationPresenter @Inject constructor(var occupationInteractor: Occupati
 
     fun getOccupation(key: String? = "") {
         CoroutineScope(Dispatchers.IO).launch {
-            val occupation = occupationInteractor.getOccupation(key)
+            val occupation = occupationInteractor.getOccupation(key ?: "")
             screen?.showOccupationDetails(occupation)
         }
     }
@@ -23,5 +24,12 @@ class OccupationPresenter @Inject constructor(var occupationInteractor: Occupati
     fun openWebsite(url: String) {
         val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         (screen as Context).startActivity(webIntent)
+    }
+
+    fun saveOccupation(occupation: Occupation) {
+        CoroutineScope(Dispatchers.IO).launch {
+            occupationInteractor.saveOccupation(occupation)
+            screen?.occupationSaved()
+        }
     }
 }

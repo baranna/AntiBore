@@ -9,4 +9,6 @@
     <string name="priceIcon">Price</string>
     <string name="price">Price</string>
     <string name="goToPage">Go to web page</string>
+    <string name="saveForLater">Save for later</string>
+    <string name="occupationSaved">Occupation successfully saved!</string>
 </resources>

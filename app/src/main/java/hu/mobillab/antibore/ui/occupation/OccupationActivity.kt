@@ -1,10 +1,10 @@
 package hu.mobillab.antibore.ui.occupation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -63,6 +62,12 @@ class OccupationActivity : AppCompatActivity(), OccupationScreen {
 
     override fun showOccupationDetails(occupation: Occupation?) {
         this.occupation.value = occupation
+    }
+
+    override fun occupationSaved() {
+        runOnUiThread {
+            Toast.makeText(this, R.string.occupationSaved, Toast.LENGTH_SHORT).show()
+        }
     }
 
     @Composable
@@ -150,9 +155,18 @@ class OccupationActivity : AppCompatActivity(), OccupationScreen {
         ) {
             Divider(thickness = 1.dp)
             Row(
-                horizontalArrangement = Arrangement.End,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
+                TextButton(
+                    onClick = { occupationPresenter.saveOccupation(occupation) },
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colors.secondary)
+                ) {
+                    Text(
+                        text = stringResource(R.string.saveForLater),
+                        modifier = Modifier.padding(5.dp),
+                    )
+                }
                 TextButton(
                     onClick = { occupation.link?.let { occupationPresenter.openWebsite(it) } },
                     enabled = !occupation.link.isNullOrEmpty(),
@@ -160,7 +174,6 @@ class OccupationActivity : AppCompatActivity(), OccupationScreen {
                     Text(
                         text = stringResource(R.string.goToPage),
                         modifier = Modifier.padding(5.dp),
-                        fontWeight = FontWeight.Bold,
                     )
                 }
             }

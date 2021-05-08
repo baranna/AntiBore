@@ -13,7 +13,6 @@ class OccupationInteractor @Inject constructor(
 ) {
 
     suspend fun getOccupations(): List<Occupation> {
-        occupationRepository.getAllOccupations()
         val list = mutableListOf<Occupation>()
         for (i in 1..10) {
             list.add(mapOccupation(occupationApi.getActivity()))
@@ -21,9 +20,20 @@ class OccupationInteractor @Inject constructor(
         return list;
     }
 
-    suspend fun getOccupation(key: String? = ""): Occupation {
-        occupationRepository.getAllOccupations()
+    suspend fun getOccupation(key: String = ""): Occupation {
+        val storedOccupation = occupationRepository.getOccupation(key)
+        if (storedOccupation != null) {
+            return storedOccupation;
+        }
         return mapOccupation(occupationApi.getActivity(key))
+    }
+
+    suspend fun saveOccupation(occupation: Occupation) {
+        occupationRepository.addOccupation(occupation)
+    }
+
+    suspend fun getSavedOccupations(): List<Occupation> {
+        return occupationRepository.getAllOccupations()
     }
 
     private fun mapOccupation(dto: OccupationDto) = Occupation(
