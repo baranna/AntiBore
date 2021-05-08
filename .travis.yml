@@ -1,7 +1,5 @@
 language: android
 dist: xenial
-jdk:
-  - oraclejdk11
 android:
   components:
     - tools
@@ -23,6 +21,9 @@ android:
 before_install:
   - yes | sdkmanager "platforms;android-30"
   - chmod +x gradlew
+  - chmod +x $TRAVIS_BUILD_DIR/install-jdk.sh
+  - export JAVA_HOME=$HOME/openjdk11
+  - $TRAVIS_BUILD_DIR/install-jdk.sh -F 11 --target $JAVA_HOME
 notifications:
   email:
     recipients:
