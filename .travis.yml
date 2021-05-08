@@ -1,7 +1,7 @@
 language: android
 dist: xenial
 jdk:
-  - openjdk11
+  - oraclejdk11
 android:
   components:
     - tools
@@ -21,7 +21,7 @@ android:
     # System image run emulator(s) during tests
     - sys-img-x86-android-30
 before_install:
-  - yes | sdkmanager "platforms;android-30"
+  - yes | sdkmanager --licenses
   - chmod +x gradlew
 notifications:
   email:
