@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey
 data class Occupation (
         @PrimaryKey(autoGenerate = false) var key: String,
         var activity: String,
-        var accessibility: Double,
+        var accessibility: Double?,
         var type: Category,
-        var participants: Int,
-        var price: Double,
-        var link: String
+        var participants: Int?,
+        var price: Double?,
+        var link: String?
 )

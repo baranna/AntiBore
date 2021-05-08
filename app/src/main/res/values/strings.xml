@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">AntiBore</string>
+    <string name="categoryIcon">Category</string>
+    <string name="imageForCategory">Image for category</string>
+    <string name="participantsIcon">Participants</string>
+    <string name="participants">Participants</string>
+    <string name="accessibilityIcon">Accessibility</string>
+    <string name="accessibility">Accessibility</string>
+    <string name="priceIcon">Price</string>
+    <string name="price">Price</string>
+    <string name="goToPage">Go to web page</string>
+    <string name="saveForLater">Save for later</string>
+    <string name="occupationSaved">Occupation successfully saved!</string>
+    <string name="randomOccupations">Random ideas to spend time on</string>
+    <string name="savedOccupations">Your spared occupations</string>
+    <string name="occupationDeleted">Occupation removed from saved list</string>
+    <string name="deleteFromSaved">Remove from saved list</string>
+    <string name="showOnlySaved">Show only saved</string>
 </resources>

@@ -22,7 +22,7 @@ object RepositoryModule {
         app,
         AntiBoreDatabase::class.java,
         "antibore_database"
-    ).build()
+    ).fallbackToDestructiveMigration().build()
 
     @Singleton
     @Provides
