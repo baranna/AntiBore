@@ -1,5 +1,5 @@
 language: android
-dist: trusty
+dist: xenial
 android:
   components:
     - tools
@@ -21,11 +21,15 @@ android:
 before_install:
   - yes | sdkmanager "platforms;android-30"
   - chmod +x gradlew
+  - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
+  - chmod +x $TRAVIS_BUILD_DIR/install-jdk.sh
+  - export JAVA_HOME=$HOME/openjdk11
+  - $TRAVIS_BUILD_DIR/install-jdk.sh -F 11 --target $JAVA_HOME
 notifications:
   email:
     recipients:
       - baross.anna@gmail.com
-    on_success: always
+    on_success: never
     on_failure: always
 script:
   - ./gradlew build

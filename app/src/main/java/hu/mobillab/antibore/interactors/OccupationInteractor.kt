@@ -4,33 +4,43 @@ import hu.mobillab.antibore.model.Category
 import hu.mobillab.antibore.model.Occupation
 import hu.mobillab.antibore.network.OccupationApi
 import hu.mobillab.antibore.network.dto.OccupationDto
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import hu.mobillab.antibore.repository.OccupationRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class OccupationInteractor @Inject constructor(var occupationApi: OccupationApi, var occupationRepository: OccupationRepository) {
+class OccupationInteractor @Inject constructor(
+    var occupationApi: OccupationApi,
+    var occupationRepository: OccupationRepository
+) {
 
-    fun getOccupations() {
-        // TODO: get stored occupations and get new ones
-        CoroutineScope(Dispatchers.IO).launch {
-            occupationRepository.getAllOccupations()
-            occupationApi.getActivity()
+    suspend fun getOccupations(): List<Occupation> {
+        val list = mutableListOf<Occupation>()
+        for (i in 1..10) {
+            list.add(mapOccupation(occupationApi.getActivity()))
         }
+        return list;
     }
 
-    fun getOccupation(key: String = "") {
-        CoroutineScope(Dispatchers.IO).launch {
-            occupationRepository.getAllOccupations()
-            occupationApi.getActivity(key)
+    suspend fun getOccupation(key: String = ""): Pair<Occupation, Boolean> {
+        val storedOccupation = occupationRepository.getOccupation(key)
+        if (storedOccupation != null) {
+            return (storedOccupation to true);
         }
+        return (mapOccupation(occupationApi.getActivity(key)) to false)
     }
 
-    fun mapOccupation(dto: OccupationDto) = Occupation(
+    suspend fun saveOccupation(occupation: Occupation) {
+        occupationRepository.addOccupation(occupation)
+    }
+
+    suspend fun deleteOccupation(occupation: Occupation) {
+        occupationRepository.deleteOccupation(occupation)
+    }
+
+    suspend fun getSavedOccupations(): List<Occupation> {
+        return occupationRepository.getAllOccupations()
+    }
+
+    private fun mapOccupation(dto: OccupationDto) = Occupation(
         dto.key ?: "",
         dto.activity ?: "",
         dto.accessibility?.toDouble() ?: 0.0,
