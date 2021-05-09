@@ -3,7 +3,7 @@ package hu.mobillab.antibore.repository
 import hu.mobillab.antibore.model.Occupation
 import javax.inject.Inject
 
-class OccupationRepository @Inject constructor(
+open class OccupationRepository @Inject constructor(
     private val occupationDAO: OccupationDAO
 ){
     suspend fun getAllOccupations() = occupationDAO.getAllOccupations()
