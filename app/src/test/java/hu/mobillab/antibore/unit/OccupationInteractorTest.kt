@@ -1,6 +1,5 @@
 package hu.mobillab.antibore.unit
 
-import dagger.hilt.android.testing.HiltAndroidTest
 import hu.mobillab.antibore.interactors.OccupationInteractor
 import hu.mobillab.antibore.model.Category
 import hu.mobillab.antibore.model.Occupation
@@ -14,7 +13,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-@HiltAndroidTest
 class OccupationInteractorTest {
 
     private lateinit var interactor: OccupationInteractor
