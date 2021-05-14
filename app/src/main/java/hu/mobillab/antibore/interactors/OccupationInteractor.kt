@@ -1,5 +1,9 @@
 package hu.mobillab.antibore.interactors
 
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import hu.mobillab.antibore.model.Category
 import hu.mobillab.antibore.model.Occupation
 import hu.mobillab.antibore.network.OccupationApi
@@ -25,6 +29,12 @@ class OccupationInteractor @Inject constructor(
         if (storedOccupation != null) {
             return (storedOccupation to true);
         }
+
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+            param(FirebaseAnalytics.Param.CONTENT_TYPE, "occupation")
+            param(FirebaseAnalytics.Param.ITEM_ID, key)
+        }
+
         return (mapOccupation(occupationApi.getActivity(key)) to false)
     }
 

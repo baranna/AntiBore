@@ -1,9 +1,9 @@
 package hu.mobillab.antibore.ui.components
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.BugReport
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -14,11 +14,21 @@ import hu.mobillab.antibore.R
 @Composable
 @Preview
 fun TopBar() {
-    TopAppBar {
-        Text(
-            text = stringResource(R.string.app_name),
-            modifier = Modifier.padding(10.dp, 0.dp),
-            style = MaterialTheme.typography.h6
-        )
-    }
+    TopAppBar(
+        title = {
+            Text(
+                text = stringResource(R.string.app_name),
+                modifier = Modifier.padding(10.dp, 0.dp),
+                style = MaterialTheme.typography.h6
+            )
+        },
+        actions = {
+            IconButton(onClick = { TODO() }) {
+                Icon(
+                    imageVector = Icons.Outlined.BugReport,
+                    contentDescription = "Make me crash"
+                )
+            }
+        }
+    )
 }
