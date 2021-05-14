@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "217107047351",
+    "project_id": "antibore-73dbe",
+    "storage_bucket": "antibore-73dbe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217107047351:android:6fda545dac237d4a96fe32",
+        "android_client_info": {
+          "package_name": "hu.mobillab.antibore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217107047351-e79mbt5act8etv9a222nnjmvhnoeekc7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOGQ5ONP5-IGDOYQCBAa2lPtcN3438NIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "217107047351-e79mbt5act8etv9a222nnjmvhnoeekc7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
